@@ -1,0 +1,113 @@
+﻿@model PagedList.IPagedList<Project2.Models.Employee>
+@using PagedList.Mvc;
+@using PagedList;
+@using X.PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Admin";
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+@using (Html.BeginForm("Index", "Work", FormMethod.Get))
+{
+
+    <p>
+        Find by EmployeeNumber: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("EmployeeNumber", "Index", new { sortOrder = ViewBag.EmployeeSort, currentFilter = ViewBag.CurrentFilter, pageNumber = ViewBag.CurrentPage })
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Education Field
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>               </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EducationField)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>            
+
+                 @if (ViewBag.Admin.Contains("Admin"))
+                 {
+                     <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeNumber }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EmployeeNumber }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeNumber })
+                    </td>
+                   }
+                else
+                {
+                 <td>
+                     @Html.ActionLink("Details", "Details", new { id = item.EmployeeNumber })
+                </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    <div>
+
+        @if ((Model.PageNumber >= 4))
+        {
+            <a href="@Url.Action("Index",new { pageNumber = 1})" class="btn btn-default">&laquo;</a>
+        }
+
+        @for (var p = Model.PageNumber - 4; p <= (Model.PageNumber - 1); p++)
+        {
+            if (p >= 1)
+            {
+
+                <a href="@Url.Action("Index", new { pageNumber = p })" class="btn btn-default">@p</a>
+
+            }
+        }
+
+        <a class="disabled btn">@Model.PageNumber</a>
+
+        @for (var p = Model.PageNumber + 1; p <= (Model.PageNumber + 4); p++)
+        {
+            if (p <= Model.PageCount)
+            {
+                <a href="@Url.Action("Index", new {pageNumber = p })" class="btn btn-default">@p</a>
+            }
+
+        }
+        @if (!(Model.PageNumber >= Model.PageCount - 4))
+        {
+            <a href="@Url.Action("Index",new { pageNumber = Model.PageCount})" class="btn btn-default">&raquo;</a>
+        }
+
+    </div>

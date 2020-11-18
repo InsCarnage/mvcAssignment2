@@ -1,0 +1,162 @@
+﻿<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+@{
+    ViewData["Title"] = "DeskView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1></h1>
+<div class="chart" >
+    <canvas id="myChart" ></canvas>
+    <script>
+        let labels1 = @Html.Raw(ViewBag.lables);
+        let data1 = @Html.Raw(ViewBag.Data);
+        let colors1 = ['#f9069c', '#36CAAB', '#42b3f5', '#b942f5', '#f21f1f','#d2f21f'];
+        let myChart1 = document.getElementById("myChart");
+        let chart1 = new Chart(myChart1, {
+            type: "doughnut",
+            data: {
+                labels: labels1,
+                datasets: [{
+                    data: data1,
+                    backgroundColor: colors1
+                }]
+            },
+            options: {
+                title: {
+                    text: "Education Fields",
+                    display: true
+                },
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</div>
+
+<div class="chart" >
+    <canvas id="myChart2" ></canvas>
+    <script>
+        let labels2 = @Html.Raw(ViewBag.lbl);
+        let data2 = @Html.Raw(ViewBag.Total);
+        let colors2 = ['#f9069c', '#36CAAB', '#42b3f5', '#b942f5', '#f21f1f', '#d2f21f', '#73ffff', '#73ffa9','#ffb473'];
+        let myChart2 = document.getElementById("myChart2");
+        let chart2 = new Chart(myChart2, {
+            type: "bar",
+            data: {
+                labels: labels2,
+                datasets: [{
+                    data: data2,
+                    backgroundColor: colors2
+                }]
+            },
+            options: {
+                title: {
+                    text: "Job Role",
+                    display: true
+                },
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false
+            }
+        });
+
+    </script>
+</div>
+
+<div class="chart">
+    <canvas id="myChart3"></canvas>
+    <script>
+        let labels3 = @Html.Raw(ViewBag.list);
+        let data3 = @Html.Raw(ViewBag.Income);
+        let colors3 = [];//['#f9069c', '#36CAAB', '#42b3f5', '#b942f5', '#f21f1f', '#d2f21f', '#73ffff', '#73ffa9','#ffb473'];
+        let q = [];
+        for (let i = 0; i <= labels3.length;i++) {
+            q.push({
+                x: labels3[i],
+                y: data3[i]
+            });
+        }
+
+        console.log(labels3);
+        console.log(data3);
+        let myChart3 = document.getElementById("myChart3");
+        let chart3 = new Chart(myChart3, {
+            type: "scatter",
+            data: {
+                datasets: [{
+                    labels: 'Scatter Dataset',
+                    data: q
+                }]
+                
+            },
+            options: {
+                title: {
+                    text: "Job Role Monthly Income",
+                    display: true
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true
+                        
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                    
+                },
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false
+            }
+        });
+
+    </script>
+</div>
+
+<div class="chart">
+    <canvas id="myChart4"></canvas>
+    <script>
+        let labels4 = @Html.Raw(ViewBag.radarx);
+        let data4 = @Html.Raw(ViewBag.Department);
+        console.log(labels4);
+        console.log(data4);
+
+
+        let myChart4 = document.getElementById("myChart4");
+        let chart4 = new Chart(myChart4, {
+            type: "radar",
+            data: {
+                labels: labels4,
+                datasets: [{
+                    data: data4,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)'
+                }]
+            },
+            options: {
+                title: {
+                    text: "Average Job Roll Monthly Income",
+                    display: true
+                },
+                scale: {
+                    angleLines: {
+                        display: true
+                    },
+                    ticks: {
+                        suggestedMin: 10000
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</div>
+
