@@ -186,9 +186,6 @@ namespace Project2.Areas.Admin.Controllerss
             }
             var PersonID = (_context.Users.Where(x => x.Email == User.Identity.Name).Select(x => x.Id));
             var person = PersonID.ToList()[0];
-
-
-
             var ISAdmin = _context.UserRoles.Where(x => x.UserId == person).Select(x => x.RoleId);
             ViewBag.Admin = JsonConvert.SerializeObject(ISAdmin);
             return View(employee);
@@ -197,6 +194,10 @@ namespace Project2.Areas.Admin.Controllerss
         // GET: Admin/Work/Create
         public IActionResult Create()
         {
+            var PersonID = (_context.Users.Where(x => x.Email == User.Identity.Name).Select(x => x.Id));
+            var person = PersonID.ToList()[0];
+            var ISAdmin = _context.UserRoles.Where(x => x.UserId == person).Select(x => x.RoleId);
+            ViewBag.Admin = JsonConvert.SerializeObject(ISAdmin);
             return View();
         }
 
@@ -217,9 +218,6 @@ namespace Project2.Areas.Admin.Controllerss
 
             var PersonID = (_context.Users.Where(x => x.Email == User.Identity.Name).Select(x => x.Id));
             var person = PersonID.ToList()[0];
-
-
-
             var ISAdmin = _context.UserRoles.Where(x => x.UserId == person).Select(x => x.RoleId);
             ViewBag.Admin = JsonConvert.SerializeObject(ISAdmin);
 
